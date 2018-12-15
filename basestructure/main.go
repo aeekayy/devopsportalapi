@@ -7,7 +7,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
-	"github.com/tonyalaribe/todoapi/basestructure/features/todo"
+	"github.com/aeekayy/devopsportalapi/basestructure/features/vault"
 )
 
 func Routes() *chi.Mux {
@@ -21,7 +21,7 @@ func Routes() *chi.Mux {
 	)
 
 	router.Route("/v1", func(r chi.Router) {
-		r.Mount("/api/todo", todo.Routes())
+		r.Mount("/api/vault", vault.Routes())
 	})
 
 	return router

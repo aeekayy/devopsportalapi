@@ -1,4 +1,4 @@
-package todo
+package vault
 
 import (
 	"net/http"
@@ -7,51 +7,37 @@ import (
 	"github.com/go-chi/render"
 )
 
-type Todo struct {
-	Slug  string `json:"slug"`
-	Title string `json:"title"`
-	Body  string `json:"body"`
+type Vault struct {
+	Url		string `json:"url"`
+	Name	string `json:"name"`
 }
 
 func Routes() *chi.Mux {
 	router := chi.NewRouter()
-	router.Get("/{todoID}", GetATodo)
-	router.Delete("/{todoID}", DeleteTodo)
-	router.Post("/", CreateTodo)
-	router.Get("/", GetAllTodos)
+	router.Get("/{vaultID}", GetAVault)
+	router.Delete("/{vaultID}", DeleteVault)
+	router.Post("/", CreateVault)
 	return router
 }
 
-func GetATodo(w http.ResponseWriter, r *http.Request) {
-	todoID := chi.URLParam(r, "todoID")
-	todos := Todo{
-		Slug:  todoID,
+func GetAVault(w http.ResponseWriter, r *http.Request) {
+	vaultID := chi.URLParam(r, "vaultID")
+	vaults := Vault{
+		Slug:  vaultID,
+		Url: "http://vault.aeekay.co",
 		Title: "Hello world",
-		Body:  "Heloo world from planet earth",
 	}
-	render.JSON(w, r, todos) // A chi router helper for serializing and returning json
+	render.JSON(w, r, vaults) // A chi router helper for serializing and returning json
 }
 
-func DeleteTodo(w http.ResponseWriter, r *http.Request) {
+func DeleteVault(w http.ResponseWriter, r *http.Request) {
 	response := make(map[string]string)
 	response["message"] = "Deleted TODO successfully"
 	render.JSON(w, r, response) // Return some demo response
 }
 
-func CreateTodo(w http.ResponseWriter, r *http.Request) {
+func CreateVault(w http.ResponseWriter, r *http.Request) {
 	response := make(map[string]string)
-	response["message"] = "Created TODO successfully"
+	response["message"] = "Created Vault successfully"
 	render.JSON(w, r, response) // Return some demo response
 }
-
-func GetAllTodos(w http.ResponseWriter, r *http.Request) {
-	todos := []Todo{
-		{
-			Slug:  "slug",
-			Title: "Hello world",
-			Body:  "Heloo world from planet earth",
-		},
-	}
-	render.JSON(w, r, todos) // A chi router helper for serializing and returning json
-}
-
